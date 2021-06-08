@@ -1,6 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
+////////////////
 // Modal window
 
 const modal = document.querySelector('.modal');
@@ -30,6 +30,7 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+////////////////////////////
 // Add and Remove cookie box
 
 const message = document.createElement('div')
@@ -37,17 +38,17 @@ const header = document.querySelector('.header')
 message.classList.add('cookie-message')
 message.innerHTML =  'We use cookies for improved functionality and analytics. <button class="btn btn--close--cookie">Got it!</button>'
 message.style.backgroundColor = '#37383d'
-// message.style.width = '105%'
+message.style.width = '105%'
 // message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px'
-
 message.style.height = getComputedStyle(message).height + '80px'
 
-header.append(message)
+header.prepend(message)
 
 document.querySelector('.btn--close--cookie').addEventListener('click', function() {
     message.remove()
 })
 
+///////////////////////////
 // Smooth scrolling buttons
 
 const btnScrollTo = document.querySelector('.btn--scroll-to')
@@ -57,6 +58,7 @@ btnScrollTo.addEventListener('click', function (e) {
     section1.scrollIntoView({ behavior: 'smooth' });
   });
 
+  ////////////////////////////
   // Page navigation (old way)
 
 //   document.querySelectorAll('.nav__link').forEach(function(el) {
@@ -79,4 +81,24 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
         const id = e.target.getAttribute('href')
         document.querySelector(id).scrollIntoView({behavior: 'smooth'})
     }
+})
+
+////////////////////
+// Tabbed components
+
+const tabs = document.querySelectorAll('.operations__tab')
+const tabsContainer = document.querySelector('.operations__tab-container')
+const tabsContent = document.querySelectorAll('.operations__content')
+
+tabsContainer.addEventListener('click', function(e) {
+    const clicked = e.target.closest('.operations__tab')
+
+    // Guard clause
+    if(!clicked) return
+    // Active tab
+    tabs.forEach(t => t.classList.remove('operations__tab--active'))
+    tabsContent.forEach(c => c.classList.remove('operations__content--active'))
+    clicked.classList.add('operations__tab--active')
+    // Activate content area
+    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
 })
